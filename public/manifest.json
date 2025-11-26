@@ -1,0 +1,21 @@
+{
+    "name": "Project Signal",
+    "short_name": "Signal",
+    "description": "High-signal AI engineering content curator.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#111827",
+    "theme_color": "#111827",
+    "icons": [
+        {
+            "src": "/logo-icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/logo-icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

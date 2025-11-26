@@ -1,6 +1,7 @@
 import { getCuratedDailyFeed } from '@/lib/curator';
 import { VideoCard } from '@/components/VideoCard';
 import { SundayBlackout } from '@/components/SundayBlackout';
+import Logo from '@/components/Logo';
 
 // Cache for 1 hour (3600s) to avoid hitting API limits too hard
 export const revalidate = 3600;
@@ -18,10 +19,15 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 px-4 py-12 text-zinc-200">
       <div className="mx-auto max-w-5xl">
-        <header className="mb-12 text-center">
-          <h1 className="mb-2 text-4xl font-bold tracking-tight text-white">
-            Project Signal
-          </h1>
+        import Logo from '@/components/Logo';
+
+        // ... existing imports ...
+
+        // ... inside Home component ...
+        <header className="mb-12 text-center flex flex-col items-center">
+          <div className="mb-6">
+            <Logo variant="horizontal" className="h-12 w-64" />
+          </div>
           <p className="text-zinc-400">
             Daily AI Engineering Digest. High Signal. Low Noise.
           </p>

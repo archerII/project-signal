@@ -22,13 +22,20 @@ interface DailyDigestProps {
 export const DailyDigestEmail = ({
     videos = [],
     date = new Date().toLocaleDateString(),
-}: DailyDigestProps) => (
+    baseUrl = 'https://project-signal-five.vercel.app',
+}: DailyDigestProps & { baseUrl?: string }) => (
     <Html>
         <Head />
         <Preview>Your Daily AI Engineering Digest for {date}</Preview>
         <Body style={main}>
             <Container style={container}>
-                <Heading style={h1}>Project Signal</Heading>
+                <Img
+                    src={`${baseUrl}/logo-horizontal.png`}
+                    width="200"
+                    height="40"
+                    alt="Project Signal"
+                    style={logo}
+                />
                 <Text style={text}>
                     Here are the top {videos.length} high-signal videos for today, {date}.
                 </Text>
@@ -78,12 +85,9 @@ const container = {
     maxWidth: '560px',
 };
 
-const h1 = {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    textAlign: 'center' as const,
-    margin: '30px 0',
-    color: '#ffffff',
+const logo = {
+    margin: '30px auto',
+    display: 'block',
 };
 
 const h3 = {

@@ -33,7 +33,11 @@ export async function GET(request: Request) {
             from: 'Project Signal <onboarding@resend.dev>', // Update this with your verified domain
             to: ['istvan.kuti.jr@gmail.com'], // Hardcoded for v1, or use process.env.USER_EMAIL
             subject: `Project Signal: Daily Digest for ${today.toLocaleDateString()}`,
-            react: DailyDigestEmail({ videos, date: today.toLocaleDateString() }),
+            react: DailyDigestEmail({
+                videos,
+                date: today.toLocaleDateString(),
+                baseUrl: process.env.NEXTAUTH_URL
+            }),
         });
 
         if (error) {
