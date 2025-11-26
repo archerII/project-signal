@@ -6,7 +6,7 @@ const openai = new OpenAI({
 
 export async function scoreVideo(title: string, description: string, channelTitle: string) {
     const prompt = `
-    Analyze this YouTube video for an AI Engineer.
+    Analyze this YouTube video for an AI Engineer who values high-signal content, including strategic insights, architectural concepts, and industry impact, not just code tutorials.
     
     Video: "${title}"
     Channel: "${channelTitle}"
@@ -14,12 +14,12 @@ export async function scoreVideo(title: string, description: string, channelTitl
 
     Task:
     1. Detect Hype/Clickbait (Is it "Game Over", "Scary", "AGI is here"?).
-    2. Assess Utility (Is it a tutorial, code walkthrough, or deep dive?).
+    2. Assess Utility (Is it a tutorial, deep dive, strategic analysis, or high-level concept explanation?).
     
     Return a JSON object:
     {
-      "isHype": boolean, // true if it's mostly news/speculation/reaction
-      "utilityScore": number, // 1-10 (10 = pure code tutorial, 1 = pure reaction)
+      "isHype": boolean, // true if it's mostly news/speculation/reaction without substance
+      "utilityScore": number, // 1-10 (10 = deep technical or strategic insight, 1 = pure reaction/fluff)
       "summary": "1 sentence takeaway"
     }
   `;

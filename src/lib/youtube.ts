@@ -35,7 +35,7 @@ export async function fetchDailyVideos() {
         part: ['snippet'],
         order: 'date',
         publishedAfter: publishedAfter,
-        maxResults: 2, // We only care about their latest 1-2 videos per day
+        maxResults: 5, // Fetch more candidates to ensure we have enough after filtering
         type: ['video'],
       });
 

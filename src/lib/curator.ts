@@ -32,7 +32,7 @@ export async function getCuratedDailyFeed(): Promise<CuratedVideo[]> {
 
         const score = await scoreVideo(title, description, channelTitle || '');
 
-        if (score && !score.isHype && score.utilityScore >= 7) {
+        if (score && !score.isHype && score.utilityScore >= 6) {
             curatedList.push({
                 id: videoId,
                 title: title,
@@ -47,5 +47,5 @@ export async function getCuratedDailyFeed(): Promise<CuratedVideo[]> {
     }
 
     // 3. Sort by Utility Score (Desc) and Limit to 5
-    return curatedList.sort((a, b) => b.utilityScore - a.utilityScore).slice(0, 5);
+    return curatedList.sort((a, b) => b.utilityScore - a.utilityScore).slice(0, 10);
 }
