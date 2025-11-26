@@ -19,11 +19,6 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 px-4 py-12 text-zinc-200">
       <div className="mx-auto max-w-5xl">
-        import Logo from '@/components/Logo';
-
-        // ... existing imports ...
-
-        // ... inside Home component ...
         <header className="mb-12 text-center flex flex-col items-center">
           <div className="mb-6">
             <Logo variant="horizontal" />

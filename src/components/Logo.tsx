@@ -13,7 +13,7 @@ export default function Logo({ className = '', variant = 'responsive' }: LogoPro
             {/* Icon - Visible on Mobile by default in responsive mode */}
             {(variant === 'responsive' || variant === 'icon') && (
                 <div className={cn(
-                    "relative w-10 h-10 bg-white rounded-lg p-1.5 shadow-md",
+                    "relative w-10 h-10",
                     variant === 'responsive' ? 'block md:hidden' : '',
                     className
                 )}>
@@ -30,7 +30,7 @@ export default function Logo({ className = '', variant = 'responsive' }: LogoPro
             {/* Horizontal - Visible on Desktop by default in responsive mode */}
             {(variant === 'responsive' || variant === 'horizontal') && (
                 <div className={cn(
-                    "relative w-48 h-12 bg-white rounded-xl px-4 py-2 shadow-md",
+                    "relative w-48 h-12",
                     variant === 'responsive' ? 'hidden md:block' : '',
                     className
                 )}>
@@ -47,7 +47,7 @@ export default function Logo({ className = '', variant = 'responsive' }: LogoPro
             {/* Stacked - Explicit use only */}
             {variant === 'stacked' && (
                 <div className={cn(
-                    "relative w-48 h-48 bg-white rounded-2xl p-6 shadow-xl",
+                    "relative w-48 h-48",
                     className
                 )}>
                     <Image
