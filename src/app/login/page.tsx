@@ -7,7 +7,7 @@ export default function LoginPage() {
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-950 px-4 text-center">
             <div className="mb-8">
-                <Logo variant="stacked" className="h-40 w-40" />
+                <Logo variant="stacked" />
             </div>
             <p className="mb-8 text-zinc-400">
                 Restricted Access. Authorized Personnel Only.

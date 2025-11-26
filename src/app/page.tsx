@@ -26,7 +26,7 @@ export default async function Home() {
         // ... inside Home component ...
         <header className="mb-12 text-center flex flex-col items-center">
           <div className="mb-6">
-            <Logo variant="horizontal" className="h-12 w-64" />
+            <Logo variant="horizontal" />
           </div>
           <p className="text-zinc-400">
             Daily AI Engineering Digest. High Signal. Low Noise.
