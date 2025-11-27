@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   description: "High-signal AI engineering content curator.",
   manifest: "/manifest.json",
   icons: {
-    icon: "/logo-icon-green.png",
-    shortcut: "/logo-icon-green.png",
+    icon: "/icon-192.png",
+    shortcut: "/icon-192.png",
     apple: "/apple-icon.png",
   },
 };
