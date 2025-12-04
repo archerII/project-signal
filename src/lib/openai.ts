@@ -6,21 +6,33 @@ const openai = new OpenAI({
 
 export async function scoreVideo(title: string, description: string, channelTitle: string) {
     const prompt = `
-    Analyze this YouTube video for an AI Engineer who values high-signal content, including strategic insights, architectural concepts, and industry impact, not just code tutorials.
+    Analyze this YouTube video for an AI Engineer who values "Human-Language" explanations, Frontier Models, and Practical Use Cases.
     
+    The user specifically LOVES:
+    - Frontier Models: ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google).
+    - Practical AI Use Cases: Real-world applications, "How to build X with AI", "Agentic Workflows".
+    - Applied AI Tools: Cursor, V0, Replit, etc.
+    - Creators like Tina Huang and Nate B. Jones.
+
+    The user specifically DISLIKES:
+    - Generic Enterprise Cloud content (AWS, Amazon Sagemaker, Azure, Google Cloud Platform infrastructure) UNLESS it is strictly about deploying the 3 frontier models above.
+    - Heavy corporate marketing / "Enterprise-speak".
+    - Pure hype / "Game Over" / "AGI is here" clickbait.
+
     Video: "${title}"
     Channel: "${channelTitle}"
-    Description: "${description.slice(0, 300)}..."
+    Description: "${description.slice(0, 500)}..."
 
     Task:
-    1. Detect Hype/Clickbait (Is it "Game Over", "Scary", "AGI is here"?).
-    2. Assess Utility (Is it a tutorial, deep dive, strategic analysis, or high-level concept explanation?).
+    1. Detect Hype/Clickbait.
+    2. Assess Relevance to User Preferences (Frontier Models & Practical Use Cases vs. Enterprise Cloud).
+    3. Assign Utility Score.
     
     Return a JSON object:
     {
-      "isHype": boolean, // true if it's mostly news/speculation/reaction without substance
-      "utilityScore": number, // 1-10 (10 = deep technical or strategic insight, 1 = pure reaction/fluff)
-      "summary": "1 sentence takeaway"
+      "isHype": boolean, // true if it's clickbait OR if it's generic Enterprise Cloud/AWS content that isn't about the frontier models.
+      "utilityScore": number, // 1-10. Give High scores (8-10) for ChatGPT/Claude/Gemini/Practical Apps. Give Low scores (1-4) for AWS/Sagemaker/Enterprise marketing.
+      "summary": "1 sentence takeaway focusing on the practical value."
     }
   `;
 
