@@ -17,6 +17,7 @@ export async function getCuratedDailyFeed(): Promise<CuratedVideo[]> {
     const rawVideos = await fetchDailyVideos();
 
     const curatedList: CuratedVideo[] = [];
+    const rejectedHighPotential: (CuratedVideo & { isHype: boolean })[] = [];
 
     // 2. Score and Filter
     // In a real app, we'd use Promise.allSettled or a queue to avoid rate limits
@@ -32,8 +33,9 @@ export async function getCuratedDailyFeed(): Promise<CuratedVideo[]> {
 
         const score = await scoreVideo(title, description, channelTitle || '');
 
-        if (score && !score.isHype && score.utilityScore >= 6) {
-            curatedList.push({
+        // Store all scored videos for fallback
+        if (score) {
+            const enrichedVideo = {
                 id: videoId,
                 title: title,
                 channelTitle: channelTitle || 'Unknown',
@@ -42,10 +44,28 @@ export async function getCuratedDailyFeed(): Promise<CuratedVideo[]> {
                 publishedAt: publishedAt || new Date().toISOString(),
                 utilityScore: score.utilityScore,
                 summary: score.summary,
-            });
+                isHype: score.isHype
+            };
+
+            // Strict Filter: No Hype + Utility Score >= 5 (Lowered from 6)
+            if (!score.isHype && score.utilityScore >= 5) {
+                curatedList.push(enrichedVideo);
+            } else {
+                rejectedHighPotential.push(enrichedVideo);
+            }
         }
     }
 
-    // 3. Sort by Utility Score (Desc) and Limit to 5
+    // Fallback: If no videos passed strict filter, take top 3 from rejected (if they have decent score)
+    if (curatedList.length === 0 && rejectedHighPotential.length > 0) {
+        // Sort rejected by score
+        const bestRejected = rejectedHighPotential
+            .sort((a, b) => b.utilityScore - a.utilityScore)
+            .slice(0, 3); // Take top 3
+
+        curatedList.push(...bestRejected);
+    }
+
+    // 3. Sort by Utility Score (Desc) and Limit to 10
     return curatedList.sort((a, b) => b.utilityScore - a.utilityScore).slice(0, 10);
 }
