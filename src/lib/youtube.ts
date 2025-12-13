@@ -19,9 +19,9 @@ export async function fetchDailyVideos() {
     return [];
   }
 
-  const oneDayAgo = new Date();
-  oneDayAgo.setDate(oneDayAgo.getDate() - 1);
-  const publishedAfter = oneDayAgo.toISOString();
+  const threeDaysAgo = new Date();
+  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+  const publishedAfter = threeDaysAgo.toISOString();
 
   const allVideos = [];
 
@@ -35,7 +35,7 @@ export async function fetchDailyVideos() {
         part: ['snippet'],
         order: 'date',
         publishedAfter: publishedAfter,
-        maxResults: 5, // Fetch more candidates to ensure we have enough after filtering
+        maxResults: 10, // Increased to 10 to catch more candidates
         type: ['video'],
       });
 

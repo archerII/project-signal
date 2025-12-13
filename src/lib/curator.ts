@@ -56,9 +56,9 @@ export async function getCuratedDailyFeed(): Promise<CuratedVideo[]> {
         }
     }
 
-    // Fallback: If no videos passed strict filter, take top 3 from rejected (if they have decent score)
+    // Fallback: If no videos passed strict filter, take top 3 from rejected (regardless of score, to guarantee feed)
     if (curatedList.length === 0 && rejectedHighPotential.length > 0) {
-        // Sort rejected by score
+        // Sort rejected by score (even if low)
         const bestRejected = rejectedHighPotential
             .sort((a, b) => b.utilityScore - a.utilityScore)
             .slice(0, 3); // Take top 3
