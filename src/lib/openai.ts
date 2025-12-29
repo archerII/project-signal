@@ -1,21 +1,30 @@
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function scoreVideo(title: string, description: string, channelTitle: string) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+        console.warn('OPENAI_API_KEY is missing. Skipping scoreVideo.');
+        return null;
+    }
+
+    const openai = new OpenAI({
+        apiKey: apiKey,
+    });
+
     const prompt = `
     Analyze this YouTube video for an AI Engineer who values "Human-Language" explanations, Frontier Models, and Practical Use Cases.
     
-    The user specifically LOVES:
+    The user specifically LOVES (HIGH PRIORITY):
+    - "Claude Code" - Anthropic's AI coding assistant (PRIORITY!)
     - Frontier Models: ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google).
+    - AI Coding Tools: Cursor, V0, Replit, Windsurf, Bolt.
     - Practical AI Use Cases: Real-world applications, "How to build X with AI", "Agentic Workflows".
-    - Applied AI Tools: Cursor, V0, Replit, etc.
-    - Creators like Tina Huang and Nate B. Jones.
+    - Indie Hacker / Startup perspective over Enterprise.
+    - Creators like Tina Huang, Nate B. Jones, IndyDevDan, Fireship.
 
-    The user specifically DISLIKES:
-    - Generic Enterprise Cloud content (AWS, Amazon Sagemaker, Azure, Google Cloud Platform infrastructure) UNLESS it is strictly about deploying the 3 frontier models above.
+    The user specifically DISLIKES (PENALIZE HEAVILY):
+    - Generic Enterprise Cloud content: AWS, Amazon Sagemaker, Azure, GCP infrastructure.
+    - IMPORTANT: Mark AWS/Enterprise content as "isHype: true" UNLESS it's strictly about deploying a frontier model.
     - Heavy corporate marketing / "Enterprise-speak".
     - Pure hype / "Game Over" / "AGI is here" clickbait.
 
@@ -24,14 +33,14 @@ export async function scoreVideo(title: string, description: string, channelTitl
     Description: "${description.slice(0, 500)}..."
 
     Task:
-    1. Detect Hype/Clickbait.
-    2. Assess Relevance to User Preferences (Frontier Models & Practical Use Cases vs. Enterprise Cloud).
+    1. Detect Hype/Clickbait or Enterprise Cloud marketing.
+    2. Assess Relevance: Claude Code > Other Frontier Tools > Enterprise Cloud.
     3. Assign Utility Score.
     
     Return a JSON object:
     {
-      "isHype": boolean, // true if it's clickbait OR if it's generic Enterprise Cloud/AWS content that isn't about the frontier models.
-      "utilityScore": number, // 1-10. Give High scores (8-10) for ChatGPT/Claude/Gemini/Practical Apps. Give Low scores (1-4) for AWS/Sagemaker/Enterprise marketing.
+      "isHype": boolean, // true if clickbait OR generic AWS/Enterprise content.
+      "utilityScore": number, // 9-10: Claude Code/Frontier Tools. 6-8: Other practical AI. 1-4: AWS/Enterprise.
       "summary": "1 sentence takeaway focusing on the practical value."
     }
   `;
@@ -52,3 +61,4 @@ export async function scoreVideo(title: string, description: string, channelTitl
         return null;
     }
 }
+
